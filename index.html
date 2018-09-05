@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Simple Web Image Editor</title>
+
+    <!-- JQUERY-->
+    <script src="https://code.jquery.com/jquery-latest.js" crossorigin="anonymous"></script>
+    <!--BOOTSRAP-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+        crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+        crossorigin="anonymous"></script>
+    <!--My custom css and js files-->
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js"></script>
+
+</head>
+
+<body>
+    <audio id="audio">
+        Your browser does not support the
+        <code>audio</code> element.
+    </audio>
+
+    <header class="panel">
+        <div class="controls">
+            <div class="control-item">
+                <div class="dropdown">
+                    <div id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <li>
+                            <img src="./assets/images/draw.svg" alt="cropButton">
+                            <div class="text">DRAW</div>
+                        </li>
+                    </div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button class="dropdown-item" type="button" id="penDraw">Pen</button>
+                        <button class="dropdown-item" type="button" id="lineDraw">Line</button>
+                        <button class="dropdown-item" type="button" id="rectangleDraw">Rectangle</button>
+                        <button class="dropdown-item" type="button" id="circleDraw">Circle</button>
+                    </div>
+                </div>
+            </div>
+            <div class="control-item" id="cropButton">
+                <li>
+                    <img src="./assets/images/crop-symbol.svg" alt="cropButton">
+                    <div class="text">CROP</div>
+                </li>
+            </div>
+            <div class="control-item">
+                <div data-toggle="modal" data-target="#resolutionModal">
+                    <li>
+                        <img src="./assets/images/resize.svg" alt="cropButton">
+                        <div class="text">RESIZE</div>
+                    </li>
+                </div>
+            </div>
+            <div class="control-item">
+                <div class="dropdown">
+                    <div id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <li>
+                            <img src="./assets/images/filter.svg" alt="cropButton">
+                            <div class="text">FILTER</div>
+                        </li>
+                    </div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                        <button class="dropdown-item" type="button" id="grayscale">Grayscale</button>
+                        <button class="dropdown-item" type="button" id="threshold">Threshold</button>
+                        <button class="dropdown-item" type="button" id="sephia">Sephia</button>
+                        <button class="dropdown-item" type="button" id="invert">Invert Colors</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-item" id="undoButton">
+                <li>
+                    <img src="./assets/images/undo.svg" alt="cropButton">
+                    <div class="text">RESET</div>
+                </li>
+            </div>
+            <div class="control-item">
+                <a id="linkDownload" href="#" download="processedImage.png">
+                    <li>
+                        <img src="./assets/images/download.svg" alt="cropButton">
+                        <div class="text">SAVE</div>
+                    </li>
+                </a>
+            </div>
+        </div>
+    </header>
+
+
+
+    <div class="img-area text-center">
+        <!-- BEFORE DRAG IMAGE AREA-->
+        <div id="default-drag-area">
+            <img src="./media/49665-200.png" class="img-fluid" />
+            <h5>Drag your picture here to start editing.</h5>
+        </div>
+        <!-- INITIAL IMAGE INVISIBLE IN ORDER TO UNDO CHANGES LATER-->
+        <img id="initial-image" class="invisible" />
+        <!-- PROCESSED IMAGE-->
+        <canvas id="imageProcessed" class="invisible">
+    </div>
+
+
+    <!-- Modal resize resolution -->
+    <div class="modal fade" id="resolutionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Resolution</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="modifyResolution">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="checkbox-img-ratio">
+                                <label class="custom-control-label" for="checkbox-img-ratio">Keep the image ratio</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="width-size" class="col-form-label">Width:</label>
+                            <input type="number" class="form-control" id="width-size">
+                        </div>
+                        <div class="form-group">
+                            <label for="height-size" class="col-form-label">Height:</label>
+                            <input type="number" class="form-control" id="height-size">
+                        </div>
+                    </div>
+                    <div id="uploadPictureError" class="invisible">
+                        <h3>You need to add a picture first!</h3>
+                        <h5>Use drag and drop.</h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveResolution">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
