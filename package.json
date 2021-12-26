@@ -1,0 +1,26 @@
+{
+  "name": "simple-web-image-editor",
+  "version": "1.0.0",
+  "description": "A simple image editor web app built with vanilla Javascript and HTML5 Canvas.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base=./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/craciuncezar/Simple-web-image-editor.git"
+  },
+  "keywords": [
+    "drawing",
+    "canvas"
+  ],
+  "author": "Cezar Craciun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/craciuncezar/Simple-web-image-editor/issues"
+  },
+  "homepage": "https://craciuncezar.github.io/Simple-web-image-editor/",
+  "devDependencies": {
+    "vite": "2.7.7"
+  }
+}
