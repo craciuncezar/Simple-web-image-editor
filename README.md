@@ -1,9 +1,10 @@
 # Simple-web-image-editor
-A simple image editor web app build with jquery and HTML5 Canvas
+
+A simple image editor web app built with vanilla Javascript and HTML5 Canvas.
 
 [Live demo here](https://craciuncezar.github.io/Simple-web-image-editor/)
 
 ## ABOUT
 
-Star editing by drag and drop an image from your computer. Draw on the image, crop, resize it and save the edited image to your computer.
-Users can select to draw over the image using either predefined shapes like circles, rectangles, lines or to draw freely. Change the image size with the posibility to keep the ratio or simply crop it to get rid of unwanted areas. Add image filters like Grayscale, Threshold, Sephia or Invert Colors.
+Begin by dragging and dropping an image from your computer. Draw on the image, crop it, and resize it before saving it to your computer.
+Users can choose to draw over the image using predefined forms such as circles, rectangles, and lines, or they can draw freely. Change the image size while maintaining the aspect ratio, or crop it to remove undesired sections. Filters like Grayscale, Threshold, Sephia, and Invert Colors can be used.
