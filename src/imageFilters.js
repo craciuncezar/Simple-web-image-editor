@@ -20,7 +20,7 @@ document.getElementById("threshold").addEventListener("click", () => {
 
 document.getElementById("sephia").addEventListener("click", () => {
   applyPixelTransformation((pixels) => {
-    for (var i = 0; i < pixels.length; i += 4) {
+    for (let i = 0; i < pixels.length; i += 4) {
       const [r, g, b] = getRGB(pixels, i);
       pixels[i] = r * 0.393 + g * 0.769 + b * 0.189;
       pixels[i + 1] = r * 0.349 + g * 0.686 + b * 0.168;
