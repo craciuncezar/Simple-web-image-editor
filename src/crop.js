@@ -1,14 +1,9 @@
-import { getOffset } from "./utils";
+import { canvas } from "./canvas";
 
-const cropButton = document.getElementById("cropButton");
+const image = new Image();
 
-cropButton.addEventListener("click", () => {
-  const canvas = document.getElementById("imageProcessed");
-  const context = canvas.getContext("2d");
-  const position = getOffset(canvas);
-
-  let started = false;
-  const image = new Image();
+export function cropCanvas() {
+  let position;
 
   // Start coord from the source image relative to image
   let x = 0;
@@ -16,48 +11,45 @@ cropButton.addEventListener("click", () => {
   // Position of the mouse used to get the width and height later
   let sx = 0;
   let sy = 0;
-  // Width and height of the crop
-  let width = 500;
-  let height = 700;
 
-  canvas.onmousedown = (event) => {
-    started = true;
-    sx = event.pageX;
-    sy = event.pageY;
-    x = sx - position.left;
-    y = sy - position.top;
-    image.src = canvas.toDataURL("image/png");
+  let width = 0;
+  let height = 0;
+
+  const onmousedown = ({ pageX, pageY }) => {
+    position = canvas.getPosition();
+    sx = pageX;
+    sy = pageY;
+    x = pageX - position.left;
+    y = pageY - position.top;
   };
 
-  canvas.onmousemove = (event) => {
-    if (!started) return;
-
-    // Draw rectangle
+  const onmousemove = (event) => {
     const x1 = Math.min(event.pageX - position.left, x);
     const y1 = Math.min(event.pageY - position.top, y);
     width = Math.abs(event.pageX - position.left - x1);
     height = Math.abs(event.pageY - position.top - y1);
-
-    canvas.width = image.width;
-    canvas.height = image.height;
-    context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
     if (!width || !height) return;
 
-    context.strokeRect(x1 - 1, y1 - 1, width + 2, height + 2);
+    // Draw rectangle
+    canvas.drawWithoutCommit((context) => {
+      context.strokeRect(x1 - 1, y1 - 1, width + 2, height + 2);
+    });
   };
 
-  canvas.onmouseup = (event) => {
-    started = false;
+  const onmouseup = (event) => {
     width = event.pageX - sx;
     height = event.pageY - sy;
+    if (!width || !height) return;
 
-    image.src = canvas.toDataURL("image/png");
+    image.src = canvas.getOctetStream();
     image.onload = () => {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(image, x, y, width, height, 0, 0, width, height);
+      canvas.drawWithoutCommit((context) => {
+        const canvasSize = canvas.getSize();
+        context.clearRect(0, 0, canvasSize.width, canvasSize.height);
+        canvas.resize({ width, height });
+        context.drawImage(image, x, y, width, height, 0, 0, width, height);
+      });
     };
   };
-});
+  return { onmousedown, onmousemove, onmouseup };
+}

@@ -47,7 +47,7 @@
               aria-expanded="false"
             >
               <li>
-                <img src="./assets/images/draw.svg" alt="cropButton" />
+                <img src="./assets/images/draw.svg" alt="draw icon" />
                 <div class="text">DRAW</div>
               </li>
             </div>
@@ -69,14 +69,14 @@
         </div>
         <div class="control-item" id="cropButton">
           <li>
-            <img src="./assets/images/crop-symbol.svg" alt="cropButton" />
+            <img src="./assets/images/crop-symbol.svg" alt="crop icon" />
             <div class="text">CROP</div>
           </li>
         </div>
         <div class="control-item">
           <div data-toggle="modal" data-target="#resolutionModal">
             <li>
-              <img src="./assets/images/resize.svg" alt="cropButton" />
+              <img src="./assets/images/resize.svg" alt="resize icon" />
               <div class="text">RESIZE</div>
             </li>
           </div>
@@ -90,7 +90,7 @@
               aria-expanded="false"
             >
               <li>
-                <img src="./assets/images/filter.svg" alt="cropButton" />
+                <img src="./assets/images/filter.svg" alt="filter icon" />
                 <div class="text">FILTER</div>
               </li>
             </div>
@@ -113,14 +113,20 @@
 
         <div class="control-item" id="undoButton">
           <li>
-            <img src="./assets/images/undo.svg" alt="cropButton" />
-            <div class="text">RESET</div>
+            <img src="./assets/images/undo.svg" alt="undo icon" />
+            <div class="text">UNDO</div>
+          </li>
+        </div>
+        <div class="control-item" id="redoButton">
+          <li>
+            <img src="./assets/images/redo.svg" alt="redo icon" />
+            <div class="text">REDO</div>
           </li>
         </div>
         <div class="control-item">
           <a id="linkDownload" href="#" download="processedImage.png">
             <li>
-              <img src="./assets/images/download.svg" alt="cropButton" />
+              <img src="./assets/images/download.svg" alt="download icon" />
               <div class="text">SAVE</div>
             </li>
           </a>
@@ -128,16 +134,12 @@
       </div>
     </header>
 
-    <div class="img-area text-center">
-      <!-- BEFORE DRAG IMAGE AREA-->
-      <div id="default-drag-area">
+    <div id="dragAndDropZone" class="img-area text-center">
+      <div class="drag-helper">
         <img src="./media/49665-200.png" class="img-fluid" />
         <h5>Drag your picture here to start editing.</h5>
       </div>
-      <!-- INITIAL IMAGE INVISIBLE IN ORDER TO UNDO CHANGES LATER-->
-      <img id="initial-image" class="invisible" />
-      <!-- PROCESSED IMAGE-->
-      <canvas id="imageProcessed" class="invisible" />
+      <canvas id="imageProcessed" />
     </div>
 
     <!-- Modal resize resolution -->
