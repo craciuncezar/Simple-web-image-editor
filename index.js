@@ -62,26 +62,30 @@ document.getElementById("ellipseDraw").addEventListener("click", () => {
 document.getElementById("rectangleDraw").addEventListener("click", () => {
   canvas.performWhileMouseDown(() => {
     const image = new Image();
-    let x, y, width, height, position;
+    let startX, startY, position;
 
     const onmousedown = ({ pageX, pageY }) => {
       position = canvas.getPosition();
-      x = pageX - position.left;
-      y = pageY - position.top;
+      // save the starting x/y of the rectangle
+      startX = pageX - position.left;
+      startY = pageY - position.top;
       image.src = canvas.getOctetStream();
     };
 
     const onmousemove = ({ pageX, pageY }) => {
-      x = Math.min(pageX - position.left, x);
-      y = Math.min(pageY - position.top, y);
-      width = Math.abs(pageX - position.left - x);
-      height = Math.abs(pageY - position.top - y);
+      const mouseX = pageX - position.left;
+      const mouseY = pageY - position.top;
+      const width = mouseX - startX;
+      const height = mouseY - startY;
 
       canvas.drawWithoutCommit((context) => {
+        // Draw the initial image on the canvas
+        // to get rid of the previous rectangle
         const canvasSize = canvas.getSize();
         context.drawImage(image, 0, 0, canvasSize.width, canvasSize.height);
+
         if (!width || !height) return;
-        context.strokeRect(x, y, width, height);
+        context.strokeRect(startX, startY, width, height);
       });
     };
     return { onmousedown, onmousemove };
@@ -139,33 +143,49 @@ document.getElementById("lineDraw").addEventListener("click", () => {
 document.getElementById("cropButton").addEventListener("click", () => {
   canvas.performWhileMouseDown(() => {
     const image = new Image();
-    let x, y, width, height, position;
+    let startX, startY, position, width, height;
 
     const onmousedown = ({ pageX, pageY }) => {
       position = canvas.getPosition();
-      x = pageX - position.left;
-      y = pageY - position.top;
+      // save the starting x/y of the rectangle
+      startX = pageX - position.left;
+      startY = pageY - position.top;
       image.src = canvas.getOctetStream();
     };
 
     const onmousemove = ({ pageX, pageY }) => {
-      x = Math.min(pageX - position.left, x);
-      y = Math.min(pageY - position.top, y);
-      width = Math.abs(pageX - position.left - x);
-      height = Math.abs(pageY - position.top - y);
+      const mouseX = pageX - position.left;
+      const mouseY = pageY - position.top;
+      width = mouseX - startX;
+      height = mouseY - startY;
 
       canvas.drawWithoutCommit((context) => {
+        // Draw the initial image on the canvas
+        // to get rid of the previous rectangle
         const canvasSize = canvas.getSize();
         context.drawImage(image, 0, 0, canvasSize.width, canvasSize.height);
+
         if (!width || !height) return;
-        context.strokeRect(x, y, width, height);
+        context.strokeRect(startX, startY, width, height);
       });
     };
 
     const onmouseup = () => {
       canvas.drawWithoutCommit((context) => {
-        canvas.resize({ width, height });
-        context.drawImage(image, x, y, width, height, 0, 0, width, height);
+        const absoluteWidth = Math.abs(width);
+        const absoluteHeight = Math.abs(height);
+        canvas.resize({ width: absoluteWidth, height: absoluteHeight });
+        context.drawImage(
+          image,
+          startX,
+          startY,
+          width,
+          height,
+          0,
+          0,
+          absoluteWidth,
+          absoluteHeight
+        );
       });
     };
     return { onmousedown, onmousemove, onmouseup };
