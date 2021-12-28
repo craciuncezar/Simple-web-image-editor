@@ -1,7 +1,5 @@
-container-fluid,
 html,
-body,
-.full-screen {
+body {
   height: 100%;
 }
 
@@ -11,6 +9,10 @@ body,
   border-bottom: 1px solid #545e81;
   position: fixed;
   height: 69px;
+}
+
+.no-events {
+  pointer-events: none;
 }
 
 .controls {
@@ -26,15 +28,8 @@ body,
 li {
   list-style: none;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   text-align: center;
   margin: 5px 8px;
@@ -54,10 +49,7 @@ li img {
 
 a {
   color: inherit;
-}
-a:hover {
   text-decoration: none;
-  color: inherit;
 }
 
 .img-area {
@@ -71,10 +63,4 @@ a:hover {
 
 .invisible {
   display: none;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
