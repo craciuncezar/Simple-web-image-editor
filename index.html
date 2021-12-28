@@ -27,7 +27,7 @@
       crossorigin="anonymous"
     ></script>
     <!--My custom css and js files-->
-    <link rel="stylesheet" href="./src/styles.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
 
   <body>
@@ -136,7 +136,7 @@
 
     <div id="dragAndDropZone" class="img-area text-center">
       <div class="drag-helper">
-        <img src="./media/49665-200.png" class="img-fluid" />
+        <img src="./assets/images/dragImg.png" class="img-fluid" />
         <h5>Drag your picture here to start editing.</h5>
       </div>
       <canvas id="imageProcessed" />
@@ -171,6 +171,7 @@
                   <input
                     type="checkbox"
                     class="custom-control-input"
+                    checked="checked"
                     id="checkbox-img-ratio"
                   />
                   <label class="custom-control-label" for="checkbox-img-ratio"
@@ -186,10 +187,6 @@
                 <label for="height-size" class="col-form-label">Height:</label>
                 <input type="number" class="form-control" id="height-size" />
               </div>
-            </div>
-            <div id="uploadPictureError" class="invisible">
-              <h3>You need to add a picture first!</h3>
-              <h5>Use drag and drop.</h5>
             </div>
           </div>
           <div class="modal-footer">
@@ -208,6 +205,6 @@
       </div>
     </div>
 
-    <script type="module" src="./src/index.js" defer></script>
+    <script type="module" src="./index.js" defer></script>
   </body>
 </html>
