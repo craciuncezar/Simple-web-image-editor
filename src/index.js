@@ -1,6 +1,6 @@
-import { canvas } from "./canvas";
 import { cropCanvas } from "./crop";
 import * as drawings from "./drawing";
+import { canvas } from "./entities/canvas";
 import * as imageFilters from "./imageFilters";
 import { loadImage } from "./loadImage";
 import "./resizeModal";
@@ -30,23 +30,23 @@ document.getElementById("undoButton").addEventListener("click", () => {
 });
 
 document.getElementById("circleDraw").addEventListener("click", () => {
-  canvas.drawWhileMouseDown(drawings.drawCircle);
+  canvas.performWhileMouseDown(drawings.drawCircle);
 });
 
 document.getElementById("rectangleDraw").addEventListener("click", () => {
-  canvas.drawWhileMouseDown(drawings.drawRectangle);
+  canvas.performWhileMouseDown(drawings.drawRectangle);
 });
 
 document.getElementById("penDraw").addEventListener("click", () => {
-  canvas.drawWhileMouseDown(drawings.penDraw);
+  canvas.performWhileMouseDown(drawings.penDraw);
 });
 
 document.getElementById("lineDraw").addEventListener("click", () => {
-  canvas.drawWhileMouseDown(drawings.lineDraw);
+  canvas.performWhileMouseDown(drawings.lineDraw);
 });
 
 document.getElementById("cropButton").addEventListener("click", () => {
-  canvas.drawWhileMouseDown(cropCanvas);
+  canvas.performWhileMouseDown(cropCanvas);
 });
 
 document.getElementById("linkDownload").addEventListener("click", (e) => {

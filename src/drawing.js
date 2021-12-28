@@ -1,4 +1,4 @@
-import { canvas } from "./canvas";
+import { canvas } from "./entities/canvas";
 
 const image = new Image();
 

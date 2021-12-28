@@ -1,3 +1,9 @@
+/**
+ * Simple implementation of a history object.
+ *
+ * This is a generic implementation and can be reused with other entities.
+ * In the context of this app it stores the history of the canvas as a list of ImageData objects.
+ */
 export const history = {
   past: [],
   present: null,

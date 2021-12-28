@@ -3,9 +3,8 @@ import { history } from "./history";
 /**
  * Factory function to create a canvas API wrapper.
  *
- * Encapsulates the drawing API and saves the
- * previous state of the canvas before each draw call.
- * Exposes undo and redo logic.
+ * Encapsulates the canvas element and the drawing API.
+ * Exposes undo and redo logic using the history object.
  */
 function makeCanvas() {
   const canvasEl = document.getElementById("imageProcessed");
@@ -15,6 +14,9 @@ function makeCanvas() {
     isEmpty() {
       return history.present === null;
     },
+    /**
+     * Returns the position of the canvas element relative to the document
+     */
     getPosition() {
       const box = canvasEl.getBoundingClientRect();
       return {
@@ -29,17 +31,33 @@ function makeCanvas() {
         height: canvasEl.height,
       };
     },
+    /**
+     * Resizes the canvas element to the given size.
+     * @param {{width:number, height:number}} size
+     */
     resize(size) {
       canvasEl.width = size.width;
       canvasEl.height = size.height;
     },
+    /**
+     * Performs an action on the canvas element while preserving the history.
+     * @param {callback} drawOperation
+     */
     draw(drawOperation) {
       drawOperation(context);
       this.commitDraw();
     },
+    /**
+     * Draw something on the canvas without affecting the history.
+     * This is useful for intermediate drawing steps.
+     * @param {callback} drawOperation
+     */
     drawWithoutCommit(drawOperation) {
       drawOperation(context);
     },
+    /**
+     * Commits a copy of the current ImageData to the history object.
+     */
     commitDraw() {
       const size = this.getSize();
       const data = context.getImageData(0, 0, size.width, size.height);
@@ -47,6 +65,10 @@ function makeCanvas() {
         new ImageData(new Uint8ClampedArray(data.data), data.width, data.height)
       );
     },
+    /**
+     * Abstracts the process of drawing an image on the canvas.
+     * @param {HTMLImageElement} image
+     */
     drawImage(image) {
       const { width, height } = image;
       this.resize({ width, height });
@@ -54,16 +76,21 @@ function makeCanvas() {
         context.drawImage(image, 0, 0, width, height);
       });
     },
-    drawWhileMouseDown(drawAction) {
+    /**
+     * Performs mouse events on the canvas while the mouse is down.
+     * Commits changes to the history once the mouse is released.
+     * @param {callback} action return mouse events to be performed on the canvas
+     */
+    performWhileMouseDown(action) {
       let started = false;
-      const { onmousedown, onmousemove, onmouseup } = drawAction();
+      const { onmousedown, onmousemove, onmouseup } = action();
       canvasEl.onmousedown = (e) => {
         started = true;
-        onmousedown(e);
+        onmousedown?.(e);
       };
       canvasEl.onmousemove = (e) => {
         if (!started) return;
-        onmousemove(e);
+        onmousemove?.(e);
       };
       canvasEl.onmouseup = () => {
         started = false;
@@ -71,6 +98,10 @@ function makeCanvas() {
         this.commitDraw();
       };
     },
+    /**
+     * Modifies the canvas pixels using the given transformation.
+     * @param {callback} pixelTransformation receives the pixel data to mutate in place
+     */
     applyPixelTransformation(pixelTransformation) {
       this.draw((context) => {
         const { width, height } = this.getSize();
@@ -79,18 +110,27 @@ function makeCanvas() {
         context.putImageData(imgData, 0, 0);
       });
     },
+    /**
+     * Undo the last action on the canvas.
+     */
     undo() {
       history.undo();
       const { width, height } = history.present;
       this.resize({ width, height });
       context.putImageData(history.present, 0, 0);
     },
+    /**
+     * Redo the last action on the canvas.
+     */
     redo() {
       history.redo();
       const { width, height } = history.present;
       this.resize({ width, height });
       context.putImageData(history.present, 0, 0);
     },
+    /**
+     * Return a data URI containing a representation of the current canvas as a base64 encoded string.
+     */
     getOctetStream() {
       return canvasEl
         .toDataURL("image/png")
