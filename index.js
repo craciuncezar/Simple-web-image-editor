@@ -13,6 +13,7 @@ document.getElementById("dragAndDropZone").addEventListener("drop", (e) => {
     image.src = src;
     image.onload = () => {
       document.querySelector(".drag-helper").classList.add("invisible");
+      document.getElementById("controls").classList.remove("no-events");
       canvas.drawImage(image);
     };
   }
@@ -28,11 +29,6 @@ document.getElementById("dragAndDropZone").addEventListener("drop", (e) => {
 
   const url = e.dataTransfer.getData("url");
   if (url) loadImage(url);
-});
-
-// Prevent controls if canvas is empty
-document.getElementById("controls").addEventListener("click", (e) => {
-  if (canvas.isEmpty()) e.stopPropagation();
 });
 
 // Drawings
@@ -200,38 +196,41 @@ document.getElementById("cropButton").addEventListener("click", () => {
   });
 });
 
-// Resize modal TODO: Remove jQuery and bootstrap with a native implementation
-$("#resolutionModal").on("show.bs.modal", (e) => {
-  const image = new Image();
-  const widthInput = document.getElementById("width-size");
-  const heightInput = document.getElementById("height-size");
-  const ratioCheckbox = document.getElementById("checkbox-img-ratio");
+// Resize modal
+const modal = new bootstrap.Modal(document.getElementById("resolutionModal"));
+document
+  .getElementById("resolutionModal")
+  .addEventListener("show.bs.modal", () => {
+    const image = new Image();
+    const widthInput = document.getElementById("width-size");
+    const heightInput = document.getElementById("height-size");
+    const ratioCheckbox = document.getElementById("checkbox-img-ratio");
 
-  // Update values with current resolution
-  const canvasSize = canvas.getSize();
-  widthInput.value = canvasSize.width;
-  heightInput.value = canvasSize.height;
+    // Update values with current resolution
+    const canvasSize = canvas.getSize();
+    widthInput.value = canvasSize.width;
+    heightInput.value = canvasSize.height;
 
-  // Keep image ratio if selected
-  const ratio = canvasSize.width / canvasSize.height;
-  widthInput.addEventListener("keyup", () => {
-    if (!ratioCheckbox.checked) return;
-    heightInput.value = widthInput.value / ratio;
-  });
-  heightInput.addEventListener("keyup", () => {
-    if (!ratioCheckbox.checked) return;
-    widthInput.value = heightInput.value * ratio;
-  });
+    // Keep image ratio if selected
+    const ratio = canvasSize.width / canvasSize.height;
+    widthInput.addEventListener("keyup", () => {
+      if (!ratioCheckbox.checked) return;
+      heightInput.value = widthInput.value / ratio;
+    });
+    heightInput.addEventListener("keyup", () => {
+      if (!ratioCheckbox.checked) return;
+      widthInput.value = heightInput.value * ratio;
+    });
 
-  // Redraw image with new resolution values
-  document.getElementById("saveResolution").addEventListener("click", () => {
-    image.src = canvas.getOctetStream();
-    image.width = widthInput.value;
-    image.height = heightInput.value;
-    image.onload = () => canvas.drawImage(image);
-    $("#resolutionModal").modal("hide");
+    // Redraw image with new resolution values
+    document.getElementById("saveResolution").addEventListener("click", () => {
+      image.src = canvas.getOctetStream();
+      image.width = widthInput.value;
+      image.height = heightInput.value;
+      image.onload = () => canvas.drawImage(image);
+      modal.hide();
+    });
   });
-});
 
 // Image filters
 document.getElementById("grayscale").addEventListener("click", () => {
