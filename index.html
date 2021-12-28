@@ -3,48 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <title>Simple Web Image Editor</title>
-
-    <!-- JQUERY-->
-    <script
-      src="https://code.jquery.com/jquery-latest.js"
-      crossorigin="anonymous"
-    ></script>
-    <!--BOOTSRAP-->
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-      integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-      integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
-      integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
-      crossorigin="anonymous"
-    ></script>
-    <!--My custom css and js files-->
     
-    <script type="module" crossorigin src="./assets/index.8b56313d.js"></script>
-    <link rel="stylesheet" href="./assets/index.e0ff23c2.css">
+    <link rel="icon" type="image/x-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAH60lEQVR4Xu2XeYxdVR3HP+fc5b1582aGdjrQ6QKlyiJCKVTQ2lpAkKUgLoUKxFSIgEFCbNxITIwr/xEKAg3UYJSUiAI2yJoQaRG0hELL0nVh2tKZaWd5y8yb+96792yak/QFCmkA/U+/N7/c3PxO8vue72855/I/D8FHhNuyfK7VbrGzdmGWZCdFhWiys65D1TNEIEbjYn6fEO4Nh1gfaPekOPPukf+YgNtyZWzUMUuFEz9yMAcPMJlBNxVRIcIoh8kUUT4myAWtJcCaAPETccZvdn0sAsnaGy5zzq6UUTAzaos4HEYZdEMR5EJMagBH1B4jA0kLULHCLcjNW7ntQxNwa6/NN8NolUrNN221KRAQTSn4HSLeT0I1FIcgpSAu5ng3tNKPFRasuuJDEXB/v64nDeJH1caBRdHeCrn+MVSiqCUZYsmpFM6chhAtFq10qGaLBEEYELZFHFo2Vp0oHX3J6ikcBslhqD19Xc94wsvVe9cvMn/YiNgy7CV22hLVMxorXiIbrGG1xRmHaiqzYd3rm557/KUXX3j25XWb1m9+0yhndabRdYUzzlutNK4AjkjAPX1LzmKfcsbMrj+1E1VLSasN0krDv7OJDFNp4poK0zQYbXntxbeeHBw4sOQrd2xbdPmK7eeVBkcuHhoceRELOtV4U5p3dg8+zAcgpAVotDVuC3RwVlprYI2lfmDC70JGgf/WExny2rkEvZ0+z6qpmqXx0o1L79k3jAcsWbXvQPmyRc85a88BvAp7+vrLI4Plnx9RgeT56+c545YLIYgLeTruuAR9XBcT+8epleo0ciEsPpH2c09AJ5lPSRgGnHvR+SmHIVeIF0gpvfSV0art27Xv8qWr+saO2IbVJ5atC3PBOe8pqkzjrEUISZQPCaIA5xyqrpESX2Q4HkxNdkv34ofGK2uunRW0uV9IKZcB6KZh4yubV3zx1xu//+4as1KarosfKLcUqKy5cq7J9KJaYlmx/RQu3PFtzjr4M76z81LKjTw4UA2Nbmqw+EFjtEXVFc66ZbEIS7VnvjVqnXpbJ2rZocILIknhqMJDACOPXXPewT9943Un7BBWDe1fveSGlgIjj1y9Qji3/Lr183mm80Ls0b3YtnawltkHNvDo9Ac4ttgAIIhDgtDLi0q1DxJEAQDOgU6Vb9EwDkFAmqoRp21FCnEigJSSIB+QTNSr0656bFIIEARyXqPhWHtwKiKqIybGkc6Ag3dEL/ftPIHb5r4BXlaFiwIfNIwDX+XO4UkBnoxODTpVnmwchT0iG+9hvIYJI3R7F67hkE52tLpACnFyHAvadA09OoSwFlsvAgKZ1JjfO4pwYJ0D8EFxIAOBDKUnRRy0xm8YSa+OqB6kkG0lLgyAAYZAjXVSPfMijNGtLsBa0xZKywMLN3BZfiMzRzYT9u8lHNjL/OYGLpg27FsRB846b7qpMMoi8FPP14dRpuUPo4Di0D+JwwGwQAC0QxSPQ5YyUWs0WwroVLWHYcjC3jFvKn2TXdWIyXnD1E5AANanCp1pnH/ANZVPg5DC7141tQ8sAwFAoJowAUSAAVIwIgdBQFpvbmsp0GwojXEcsihyzJk+wMxpfUTRVoRLvU8450lg8eas891hM4sEAiEwqcYp69c39VQo4Y0KUIVm27HIIGZ4bOzhFoGkloxY46VDyFE6PzOFjoULKM49m+KnZ1Cc+hqCBO/HBwLrvOGcV8Ua66ejSfIkB3OY1NGYdTqq0QnDwCiMx7OYmH4KI6PltJyMrGylIBlP1h1V7LgmDCUds8cIcg5MHZyGIE/YUSSIt2OSuQAIAcK5VlECpJWY9G9fYMoLS8ispty5B3nlX7Cnt0G9BkZj8l2+fYeGy39cuqK/0SKwd7j0q+7Jk6/JxxFCV6GxH8IOsAqyMug6RsWkSrO2ezfluM5xyWTmVacjLWADBm6/mumV01DCYDAEY92M/u5ywh88SPsMPCQwPFJS5VL11vecBVfcs3P7weHhTdZYVKUM1c0wvh1qu2BiD2ZsmEZ1Fo8cs4nNZ+zBfL7K6Jff4fEFG0jIaA61o0tdJCTU3IS3xCU0dEZ52yR8dxhLI2mwd3Dox1+/7+3h952G+0qlqwqF9q0yOiGAHQhZxZoIZ0Lq5c8RiAJjhTq5UBIFgjAQdJ1k2di/h7MrRcaognXEIvYKJK6Onfk2XScOegIKx/Z9+56/9M5td33gcXzVvX0713wvvrUQzLjd1BfgDo1NKUAAWHrGivSlCYXUIIXwvuppQ5zWN53O+a9SfmUOTgeExTrHXPAKvQv3IpwgyzTbDwxsaZb0VwW4I17J/rr85Ps/2dt7Y1dbO845AN/jAnhhUh/PnrqDno6YjrbQE5gYd1z/9HxiG2KMxWYxuaJGSIk1jlRn7OjfvzF1jfO/dufe6oe6E6757id+OePonp9OO2oyDsA5hBAoYfnt7FfZPbXsCUgB3YNFbtkyH2MtDg+vjpCCwUqJ/tHy6pyw1y++e3f6ka7lf775+C91xG33zeyeMntSexHn297PQFYf/waj+TqhlZw3eBynJ9O83zjnyVaThP3V8kAzrd90xco9T3zsH5P7b5wXdUfVm9qi+IeTCu0zJxeK5KIIKSSOFjDGkKiUSpJQaUxszZS5i9H875c+siX7r/2aPXrzrM9ixRKknBOH8lNxGHdrZTLtTFVZ+xaOfzjpnll6T99bfAT8H/8CqB1vuk2L+/gAAAAASUVORK5CYII=" />
+    <script type="module" crossorigin src="./assets/index.10727b64.js"></script>
+    <link rel="stylesheet" href="./assets/index.506ad733.css">
   </head>
 
   <body>
-    <audio id="audio">
-      Your browser does not support the
-      <code>audio</code> element.
-    </audio>
-
     <header class="panel">
-      <div id="controls" class="controls">
+      <div id="controls" class="controls noEvents">
         <div class="control-item">
           <div class="dropdown">
             <div
-              id="dropdownMenu2"
-              data-toggle="dropdown"
+              id="dropdownMenuButton1"
+              type="button"
+              data-bs-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
@@ -53,19 +32,13 @@
                 <div class="text">DRAW</div>
               </li>
             </div>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button class="dropdown-item" type="button" id="penDraw">
-                Pen
-              </button>
-              <button class="dropdown-item" type="button" id="lineDraw">
-                Line
-              </button>
-              <button class="dropdown-item" type="button" id="rectangleDraw">
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <button class="dropdown-item" id="penDraw">Pen</button>
+              <button class="dropdown-item" id="lineDraw">Line</button>
+              <button class="dropdown-item" id="rectangleDraw">
                 Rectangle
               </button>
-              <button class="dropdown-item" type="button" id="ellipseDraw">
-                Ellipse
-              </button>
+              <button class="dropdown-item" id="ellipseDraw">Ellipse</button>
             </div>
           </div>
         </div>
@@ -76,7 +49,11 @@
           </li>
         </div>
         <div class="control-item">
-          <div data-toggle="modal" data-target="#resolutionModal">
+          <div
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#resolutionModal"
+          >
             <li>
               <img src="./assets/resize.553a2ef8.svg" alt="resize icon" />
               <div class="text">RESIZE</div>
@@ -87,7 +64,7 @@
           <div class="dropdown">
             <div
               id="dropdownMenu3"
-              data-toggle="dropdown"
+              data-bs-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
@@ -153,18 +130,16 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Resolution</h5>
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
+              class="btn-close"
+              data-bs-dismiss="modal"
               aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+            />
           </div>
           <div class="modal-body">
             <div id="modifyResolution">
@@ -195,7 +170,7 @@
             <button
               type="button"
               class="btn btn-secondary"
-              data-dismiss="modal"
+              data-bs-dismiss="modal"
             >
               Close
             </button>
@@ -206,7 +181,11 @@
         </div>
       </div>
     </div>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
     
   </body>
 </html>
