@@ -65,7 +65,7 @@ a:hover {
   min-height: 100%;
 }
 
-#default-drag-area {
+.drag-helper {
   padding-top: 8%;
 }
 
