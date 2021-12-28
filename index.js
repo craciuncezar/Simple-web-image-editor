@@ -167,6 +167,11 @@ const canvas = (function makeCanvas() {
   };
 })();
 
+// Prevent controls if canvas is empty
+document.getElementById("controls").addEventListener("click", (e) => {
+  if (canvas.isEmpty()) e.stopPropagation();
+});
+
 // Image filters
 document.getElementById("grayscale").addEventListener("click", () => {
   canvas.applyPixelTransformation((pixels) => {
@@ -390,8 +395,6 @@ document.getElementById("cropButton").addEventListener("click", () => {
 
 // Resize modal TODO: Remove jQuery and bootstrap with a native implementation
 $("#resolutionModal").on("show.bs.modal", (e) => {
-  if (canvas.isEmpty()) e.preventDefault();
-
   const image = new Image();
   const widthInput = document.getElementById("width-size");
   const heightInput = document.getElementById("height-size");
