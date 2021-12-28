@@ -7,19 +7,27 @@ document.getElementById("dragAndDropZone").addEventListener("dragover", (e) => {
 
 document.getElementById("dragAndDropZone").addEventListener("drop", (e) => {
   e.preventDefault();
-  const file = e.dataTransfer.files[0];
-  if (!file) return;
 
-  const image = new Image();
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = (e) => {
-    image.src = e.target.result;
+  function loadImage(src) {
+    const image = new Image();
+    image.src = src;
     image.onload = () => {
-      canvas.drawImage(image);
       document.querySelector(".drag-helper").classList.add("invisible");
+      canvas.drawImage(image);
     };
-  };
+  }
+
+  const file = e.dataTransfer.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      loadImage(e.target.result);
+    };
+  }
+
+  const url = e.dataTransfer.getData("url");
+  if (url) loadImage(url);
 });
 
 // Prevent controls if canvas is empty
