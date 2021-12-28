@@ -28,9 +28,8 @@
     ></script>
     <!--My custom css and js files-->
     
-    
-    <script type="module" crossorigin src="./assets/index.02482039.js"></script>
-    <link rel="stylesheet" href="./assets/index.3ba5d681.css">
+    <script type="module" crossorigin src="./assets/index.89cf03ca.js"></script>
+    <link rel="stylesheet" href="./assets/index.e0ff23c2.css">
   </head>
 
   <body>
@@ -40,7 +39,7 @@
     </audio>
 
     <header class="panel">
-      <div class="controls">
+      <div id="controls" class="controls">
         <div class="control-item">
           <div class="dropdown">
             <div
@@ -50,7 +49,7 @@
               aria-expanded="false"
             >
               <li>
-                <img src="./assets/draw.33edabf1.svg" alt="cropButton" />
+                <img src="./assets/draw.25e41989.svg" alt="draw icon" />
                 <div class="text">DRAW</div>
               </li>
             </div>
@@ -64,22 +63,22 @@
               <button class="dropdown-item" type="button" id="rectangleDraw">
                 Rectangle
               </button>
-              <button class="dropdown-item" type="button" id="circleDraw">
-                Circle
+              <button class="dropdown-item" type="button" id="ellipseDraw">
+                Ellipse
               </button>
             </div>
           </div>
         </div>
         <div class="control-item" id="cropButton">
           <li>
-            <img src="./assets/crop-symbol.3e20ef19.svg" alt="cropButton" />
+            <img src="./assets/crop-symbol.8fad3f7b.svg" alt="crop icon" />
             <div class="text">CROP</div>
           </li>
         </div>
         <div class="control-item">
           <div data-toggle="modal" data-target="#resolutionModal">
             <li>
-              <img src="./assets/resize.fc283e2f.svg" alt="cropButton" />
+              <img src="./assets/resize.553a2ef8.svg" alt="resize icon" />
               <div class="text">RESIZE</div>
             </li>
           </div>
@@ -93,7 +92,7 @@
               aria-expanded="false"
             >
               <li>
-                <img src="./assets/filter.f1e63360.svg" alt="cropButton" />
+                <img src="./assets/filter.790824a3.svg" alt="filter icon" />
                 <div class="text">FILTER</div>
               </li>
             </div>
@@ -116,14 +115,20 @@
 
         <div class="control-item" id="undoButton">
           <li>
-            <img src="./assets/undo.19f62025.svg" alt="cropButton" />
-            <div class="text">RESET</div>
+            <img src="./assets/undo.0c06ab46.svg" alt="undo icon" />
+            <div class="text">UNDO</div>
+          </li>
+        </div>
+        <div class="control-item" id="redoButton">
+          <li>
+            <img src="./assets/redo.d5a8a387.svg" alt="redo icon" />
+            <div class="text">REDO</div>
           </li>
         </div>
         <div class="control-item">
           <a id="linkDownload" href="#" download="processedImage.png">
             <li>
-              <img src="./assets/download.c86e1398.svg" alt="cropButton" />
+              <img src="./assets/download.c050a4de.svg" alt="download icon" />
               <div class="text">SAVE</div>
             </li>
           </a>
@@ -131,16 +136,12 @@
       </div>
     </header>
 
-    <div class="img-area text-center">
-      <!-- BEFORE DRAG IMAGE AREA-->
-      <div id="default-drag-area">
+    <div id="dragAndDropZone" class="img-area text-center">
+      <div class="drag-helper">
         <img src="data:image/png;base64,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" class="img-fluid" />
         <h5>Drag your picture here to start editing.</h5>
       </div>
-      <!-- INITIAL IMAGE INVISIBLE IN ORDER TO UNDO CHANGES LATER-->
-      <img id="initial-image" class="invisible" />
-      <!-- PROCESSED IMAGE-->
-      <canvas id="imageProcessed" class="invisible" />
+      <canvas id="imageProcessed" />
     </div>
 
     <!-- Modal resize resolution -->
@@ -172,6 +173,7 @@
                   <input
                     type="checkbox"
                     class="custom-control-input"
+                    checked="checked"
                     id="checkbox-img-ratio"
                   />
                   <label class="custom-control-label" for="checkbox-img-ratio"
@@ -187,10 +189,6 @@
                 <label for="height-size" class="col-form-label">Height:</label>
                 <input type="number" class="form-control" id="height-size" />
               </div>
-            </div>
-            <div id="uploadPictureError" class="invisible">
-              <h3>You need to add a picture first!</h3>
-              <h5>Use drag and drop.</h5>
             </div>
           </div>
           <div class="modal-footer">
@@ -208,5 +206,7 @@
         </div>
       </div>
     </div>
+
+    
   </body>
 </html>
